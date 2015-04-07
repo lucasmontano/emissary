@@ -1,12 +1,10 @@
-package com.lucasmontano.emissary.services;
+package com.lucasmontano.emissary;
 
 import android.app.Activity;
 import android.app.Service;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-
-import java.util.Objects;
 
 /**
  * Created by montanlu on 07/04/2015.

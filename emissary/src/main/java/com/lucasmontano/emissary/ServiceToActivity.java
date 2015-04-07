@@ -1,4 +1,4 @@
-package com.lucasmontano.emissary.services;
+package com.lucasmontano.emissary;
 
 import android.content.ServiceConnection;
 import android.os.Bundle;

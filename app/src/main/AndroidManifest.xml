@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lucasmontano.services" >
+    package="com.lucasmontano.emissary.sample" >
 
     <application
         android:allowBackup="true"
@@ -8,25 +8,20 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <service
-            android:name=".service.MyService"
+            android:name=".service.WithLibService"
             android:enabled="true"
             android:exported="true" >
         </service>
         <service
-            android:name=".service.MyServiceSimple"
-            android:enabled="true"
-            android:exported="true" >
-        </service>
-        <service
-            android:name=".service.MyServiceReplyTo"
+            android:name=".service.NoLibService"
             android:enabled="true"
             android:exported="true" >
         </service>
 
-        <activity android:name=".activity.ServiceActivity" >
+        <activity android:name=".activity.NoLibActivity" >
         </activity>
 
-        <activity android:name=".activity.ServiceSimpleActivity" >
+        <activity android:name=".activity.WithLibActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

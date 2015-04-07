@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 
-import com.lucasmontano.emissary.services.Emissary;
+import com.lucasmontano.emissary.Emissary;
 
 import java.util.TimeZone;
 import java.util.Timer;

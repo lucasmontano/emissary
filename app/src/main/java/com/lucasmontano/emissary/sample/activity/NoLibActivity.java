@@ -15,7 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.lucasmontano.emissary.R;
+import com.lucasmontano.emissary.sample.R;
 import com.lucasmontano.emissary.sample.service.NoLibService;
 
 

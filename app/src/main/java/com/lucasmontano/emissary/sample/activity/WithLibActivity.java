@@ -9,9 +9,9 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lucasmontano.emissary.R;
+import com.lucasmontano.emissary.Emissary;
+import com.lucasmontano.emissary.sample.R;
 import com.lucasmontano.emissary.sample.service.WithLibService;
-import com.lucasmontano.emissary.services.Emissary;
 
 public class WithLibActivity extends ActionBarActivity {
 
