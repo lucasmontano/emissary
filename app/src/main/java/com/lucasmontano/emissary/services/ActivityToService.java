@@ -1,4 +1,4 @@
-package com.lucasmontano.services.utils;
+package com.lucasmontano.emissary.services;
 
 import android.content.ComponentName;
 import android.content.ServiceConnection;
@@ -14,25 +14,22 @@ import java.util.HashMap;
 /**
  * Created by lucasmontano on 05/04/15.
  */
-public final class ServiceConnectionHelper implements ServiceConnection {
+final class ActivityToService implements ServiceConnection, Emissary.IEmissary {
 
     private Messenger messenger;
 
     public static final int REPLY_TO = 1989;
 
-    private final HashMap<Integer, Callback> whats = new HashMap<Integer, Callback>();
+    private final HashMap<Integer, Emissary.EmissaryMessengerCallback> whats = new HashMap<Integer, Emissary.EmissaryMessengerCallback>();
 
     private IBinder mBinder;
 
-    public interface Callback {
-        public void onReceive(Bundle data);
-    }
-
-    public ServiceConnectionHelper() {
+    public ActivityToService() {
 
     }
 
-    public void addEventListener(int what, Callback receiverCallback) {
+    @Override
+    public void subscribe(int what, Emissary.EmissaryMessengerCallback receiverCallback) {
         whats.put(what, receiverCallback);
     }
 
@@ -44,7 +41,7 @@ public final class ServiceConnectionHelper implements ServiceConnection {
             @Override
             public boolean handleMessage(Message message) {
                 if (whats.containsKey(message.what)) {
-                    whats.get(message.what).onReceive(message.getData());
+                    whats.get(message.what).data(message.getData());
                     return true;
                 }
                 return false;
@@ -73,17 +70,25 @@ public final class ServiceConnectionHelper implements ServiceConnection {
 
     }
 
+    @Override
     public IBinder getIBinder() {
         return mBinder;
     }
 
+    @Override
     public boolean isBound() {
         return messenger != null;
     }
 
-    public void request(int what, Callback callback) {
+    @Override
+    public ServiceConnection getServiceConnection() {
+        return this;
+    }
 
-        addEventListener(what, callback);
+    @Override
+    public void request(int what, Emissary.EmissaryMessengerCallback callback) {
+
+        subscribe(what, callback);
 
         if (messenger != null) {
             Message message = new Message();
@@ -95,5 +100,10 @@ public final class ServiceConnectionHelper implements ServiceConnection {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void send(int what, Bundle data) {
+
     }
 }

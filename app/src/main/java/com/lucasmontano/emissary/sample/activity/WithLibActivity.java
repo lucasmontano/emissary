@@ -1,4 +1,4 @@
-package com.lucasmontano.services.activity;
+package com.lucasmontano.emissary.sample.activity;
 
 import android.app.Service;
 import android.content.Intent;
@@ -9,36 +9,35 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lucasmontano.services.R;
-import com.lucasmontano.services.service.MyServiceSimple;
-import com.lucasmontano.services.utils.ServiceConnectionHelper;
+import com.lucasmontano.emissary.R;
+import com.lucasmontano.emissary.sample.service.WithLibService;
+import com.lucasmontano.emissary.services.Emissary;
 
+public class WithLibActivity extends ActionBarActivity {
 
-public class ServiceSimpleActivity extends ActionBarActivity {
-
-    /**
-     * Simple Service Messenger
-     */
-    ServiceConnectionHelper simpleServiceConnection = new ServiceConnectionHelper();
+    private Emissary.IEmissary emissary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_replyto);
 
+        emissary = Emissary.getInstance(this);
+
         /**
          * Bind Activity to Service
          */
-        Intent intent = new Intent(this, MyServiceSimple.class);
-        bindService(intent, simpleServiceConnection, Service.BIND_AUTO_CREATE);
+        Intent intent = new Intent(this, WithLibService.class);
+        bindService(intent, emissary.getServiceConnection(), Service.BIND_AUTO_CREATE);
 
         /**
          * Event Listener
          */
-        simpleServiceConnection.addEventListener(MyServiceSimple.ON_CHANGE_TIME_ZONE, new ServiceConnectionHelper.Callback() {
+        emissary.subscribe(WithLibService.ON_CHANGE_TIME_ZONE, new Emissary.EmissaryMessengerCallback() {
+
             @Override
-            public void onReceive(Bundle data) {
-                ((TextView) findViewById(R.id.time_zone)).setText(data.getString(MyServiceSimple.ARG_TIME_ZONE));
+            public void data(Bundle data) {
+                ((TextView) findViewById(R.id.time_zone)).setText(data.getString(WithLibService.ARG_TIME_ZONE));
             }
         });
     }
@@ -50,8 +49,8 @@ public class ServiceSimpleActivity extends ActionBarActivity {
         /**
          * Bind on Create, Unbind on Destroy
          */
-        if (simpleServiceConnection.isBound()) {
-            unbindService(simpleServiceConnection);
+        if (emissary.isBound()) {
+            unbindService(emissary.getServiceConnection());
         }
     }
 
@@ -78,10 +77,11 @@ public class ServiceSimpleActivity extends ActionBarActivity {
      * Ask TimeZone
      */
     public void showServiceTimeZone() {
-        simpleServiceConnection.request(MyServiceSimple.GET_TIME_ZONE, new ServiceConnectionHelper.Callback() {
+        emissary.request(WithLibService.GET_TIME_ZONE, new Emissary.EmissaryMessengerCallback() {
+
             @Override
-            public void onReceive(Bundle data) {
-                Toast.makeText(ServiceSimpleActivity.this, data.getString(MyServiceSimple.ARG_TIME_ZONE), Toast.LENGTH_SHORT).show();
+            public void data(Bundle data) {
+                Toast.makeText(WithLibActivity.this, data.getString(WithLibService.ARG_TIME_ZONE), Toast.LENGTH_SHORT).show();
             }
         });
     }

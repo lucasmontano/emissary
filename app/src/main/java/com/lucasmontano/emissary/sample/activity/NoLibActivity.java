@@ -1,4 +1,4 @@
-package com.lucasmontano.services.activity;
+package com.lucasmontano.emissary.sample.activity;
 
 import android.app.Service;
 import android.content.ComponentName;
@@ -15,12 +15,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.lucasmontano.services.R;
-import com.lucasmontano.services.service.MyService;
-import com.lucasmontano.services.service.MyServiceReplyTo;
+import com.lucasmontano.emissary.R;
+import com.lucasmontano.emissary.sample.service.NoLibService;
 
 
-public class ServiceReplyToActivity extends ActionBarActivity {
+public class NoLibActivity extends ActionBarActivity {
 
     /**
      * Speak to Bound Service
@@ -35,8 +34,8 @@ public class ServiceReplyToActivity extends ActionBarActivity {
         @Override
         public boolean handleMessage(Message message) {
             switch (message.what) {
-                case MyServiceReplyTo.WHAT_TIME_ZONE:
-                    ((TextView) findViewById(R.id.time_zone)).setText(message.getData().getString(MyServiceReplyTo.ARG_TIME_ZONE));
+                case NoLibService.WHAT_TIME_ZONE:
+                    ((TextView) findViewById(R.id.time_zone)).setText(message.getData().getString(NoLibService.ARG_TIME_ZONE));
                     return true;
             }
             return false;
@@ -51,7 +50,7 @@ public class ServiceReplyToActivity extends ActionBarActivity {
         /**
          * Bind Activity to Service
          */
-        Intent intent = new Intent(this, MyServiceReplyTo.class);
+        Intent intent = new Intent(this, NoLibService.class);
         bindService(intent, serviceConnection, Service.BIND_AUTO_CREATE);
     }
 
@@ -68,7 +67,7 @@ public class ServiceReplyToActivity extends ActionBarActivity {
              * Ask to reply
              */
             Message message = new Message();
-            message.what = MyServiceReplyTo.REPLY_TO;
+            message.what = NoLibService.REPLY_TO;
             message.replyTo = activityMesseger;
 
             try {
@@ -120,7 +119,7 @@ public class ServiceReplyToActivity extends ActionBarActivity {
     public void showServiceTimeZone() {
         if (serviceMessenger != null) {
             Message message = new Message();
-            message.what = MyServiceReplyTo.WHAT_TIME_ZONE;
+            message.what = NoLibService.WHAT_TIME_ZONE;
 
             try {
                 serviceMessenger.send(message);

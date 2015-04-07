@@ -1,4 +1,4 @@
-package com.lucasmontano.services.service;
+package com.lucasmontano.emissary.sample.service;
 
 import android.app.Service;
 import android.content.Intent;
@@ -13,7 +13,7 @@ import android.widget.Toast;
 import java.util.TimeZone;
 
 
-public class MyServiceReplyTo extends Service {
+public class NoLibService extends Service {
 
     /**
      * Time Zone
@@ -67,7 +67,7 @@ public class MyServiceReplyTo extends Service {
 
     Messenger messenger = new Messenger(handler);
 
-    public MyServiceReplyTo() {
+    public NoLibService() {
     }
 
     @Override
