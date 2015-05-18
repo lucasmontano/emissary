@@ -89,3 +89,5 @@ Send a Event to Subscribers
   bundle.putString(WithLibService.ARG_TIME_ZONE, timeZone);
   emissary.send(ON_CHANGE_TIME_ZONE, bundle);
 ```
+
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-emissary-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/1836)
