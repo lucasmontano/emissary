@@ -1,4 +1,4 @@
-# emissary
+# Emissary
 
 A simple way to bind and exchange messages between activities and services.
 
